@@ -1,8 +1,25 @@
 aid: black-crow-ai
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/black-crow-ai.png
 name: Black Crow AI
-description: Black Crow AI is a company surfaced as a portfolio company of bloomberg-beta and added to
-  the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: Black Crow AI is an ecommerce AI company that turns paid advertising traffic into predictable
+  revenue using AI-generated post-click Storefronts. Storefronts are shopping experiences built
+  specifically for paid ad traffic, kept aligned with ad creative and audience intent, generated in
+  minutes through a no-code workflow, and optimized through structured split-test experimentation and
+  continuous learning. Black Crow also exposes a script-based "Global API" callback that surfaces its
+  real-time visitor prediction scores (delivered in under 20 milliseconds) so brands can ingest scores
+  into any target platform. Surfaced as a portfolio company of Bloomberg Beta and enriched into the API
+  Evangelist network.
 url: https://raw.githubusercontent.com/api-evangelist/black-crow-ai/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -12,9 +29,16 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
+- Ecommerce
+- Artificial Intelligence
+- Machine Learning
+- Marketing
+- Advertising
+- Personalization
+- Conversion Optimization
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -22,5 +46,34 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/black-crow-ai-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/black-crow-ai-vulnerability-disclosure.yml
+- type: Security
+  url: https://www.blackcrow.ai/legal/security-policy
+- type: SecurityTxt
+  url: well-known/black-crow-ai-security.txt
+- type: WellKnown
+  url: well-known/black-crow-ai-well-known.yml
+- type: LLMsTxt
+  url: llms/black-crow-ai-llms.txt
+- type: Support
+  url: https://blackcrow.zendesk.com/hc/en-us
+- type: SignUp
+  url: https://www.blackcrow.ai/demo
+- type: Login
+  url: https://app.blackcrow.ai/sign-in
+- type: TermsOfService
+  url: https://www.blackcrow.ai/legal/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.blackcrow.ai/legal/privacy-policy
+- type: GitHubOrganization
+  url: https://github.com/october8ai
 - type: Website
   url: https://www.blackcrow.ai/
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

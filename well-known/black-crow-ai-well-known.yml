@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: live probes of /.well-known/ on Black Crow AI hosts
+hosts:
+- host: https://app.blackcrow.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: black-crow-ai-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+- host: https://www.blackcrow.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404

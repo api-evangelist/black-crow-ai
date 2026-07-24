@@ -1,0 +1,19 @@
+Contact: security@blackcrow.ai
+Expires: 2026-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://app.blackcrow.ai/.well-known/security.txt
+Policy: https://www.blackcrow.ai/legal/security-policy
+
+# BlackCrow AI Security Contact Information
+#
+# If you discover a security vulnerability in our systems,
+# please report it responsibly to security@blackcrow.ai
+#
+# Please include:
+# - Description of the vulnerability
+# - Steps to reproduce
+# - Potential impact
+# - Any suggested mitigation
+#
+# We appreciate responsible disclosure and will respond
+# promptly to legitimate security reports.
