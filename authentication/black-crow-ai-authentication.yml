@@ -1,0 +1,62 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live probes of https://api.blackcrow.ai/v1/events/* (2026-08-12) plus the first-party
+  browser bundle https://init.blackcrow.ai/js/core/example.js (HTTP 200) and the Black Crow AI
+  help center article "JavaScript"
+  (https://blackcrow.zendesk.com/hc/en-us/articles/20203743583387-JavaScript).
+docs: https://blackcrow.zendesk.com/hc/en-us/articles/20203743583387-JavaScript
+note: >-
+  Black Crow AI publishes no OpenAPI, so no securitySchemes could be derived. This profile is
+  built from what the ingest endpoint actually accepts and from how the provider's own tag
+  authenticates itself. There is NO developer-facing API key programme: access to the platform
+  is provisioned by Black Crow (a Customer Success Manager enables features), and the browser
+  tag is identified by site rather than by a secret.
+summary:
+  types: [none, session]
+  api_key_in: []
+  oauth2_flows: []
+  developer_credentials_issued: false
+schemes:
+- name: unauthenticated-tag-ingest
+  type: none
+  applies_to: POST https://api.blackcrow.ai/v1/events/{event_name}
+  description: >-
+    The event ingest endpoint accepts anonymous cross-origin requests. A POST with an empty
+    JSON body was answered 400 with field-validation errors (siteName / pageId / visitorId
+    must not be null) — never 401 or 403 — so no credential is required to reach validation.
+    CORS is fully open: Access-Control-Allow-Origin "*", Access-Control-Allow-Methods
+    "GET, POST, PUT", Access-Control-Allow-Headers "Content-Type" (no Authorization header
+    is permitted through preflight, which confirms no bearer scheme is in use).
+  identity_carried_in:
+  - {field: siteName, in: body, note: 'customer/site identifier; the tag derives it from the bundle filename (xyz.js -> "xyz") or from Shopify.shop'}
+  - {field: visitorId, in: body, note: 'first-party visitor identifier, persisted in the _bcai_z cookie (set browser-side, or at the edge by @bcai/edge-sdk)'}
+  - {field: pageId, in: body}
+  evidence:
+  - {url: 'https://api.blackcrow.ai/v1/events/view', method: POST, http_status: 400, fetched: '2026-08-12'}
+  - {url: 'https://api.blackcrow.ai/v1/events/view', method: OPTIONS, http_status: 200, fetched: '2026-08-12'}
+- name: portal-session
+  type: session
+  applies_to: https://app.blackcrow.ai/
+  description: >-
+    The Black Crow Portal (settings, product toggles, dashboards, Predictive Offer and
+    Enhanced CAPI controls) is behind an interactive sign-in at
+    https://app.blackcrow.ai/sign-in. No OpenID Connect or OAuth discovery document is
+    served: /.well-known/openid-configuration and /.well-known/oauth-authorization-server
+    returned 404 on both app.blackcrow.ai and api.blackcrow.ai on 2026-08-12.
+  evidence:
+  - {url: 'https://app.blackcrow.ai/.well-known/openid-configuration', http_status: 404, fetched: '2026-08-12'}
+  - {url: 'https://api.blackcrow.ai/.well-known/oauth-authorization-server', http_status: 404, fetched: '2026-08-12'}
+- name: platform-oauth-delegation
+  type: delegated
+  applies_to: customer marketing platforms (Klaviyo, Attentive, Postscript, Sendlane, Mailchimp, Alia, Justuno, Meta, Google Ads, TikTok, Shopify)
+  description: >-
+    Black Crow does not issue credentials; it CONSUMES them. Onboarding is a sequence of
+    granting Black Crow access to the customer's own marketing platforms (help center
+    "Step 2 - Connect your platforms", plus one "Platform Access" article per platform),
+    and installing the Shopify app. The credential model is therefore inbound-delegated,
+    not outbound-issued.
+  docs: https://blackcrow.zendesk.com/hc/en-us/articles/20768291848475-Step-2-Connect-your-platforms
+gaps:
+- No public API key, token, or OAuth client registration exists for third-party developers.
+- No .well-known/oauth-protected-resource, no scopes surface — scopes/ is correctly absent.

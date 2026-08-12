@@ -1,0 +1,19 @@
+generated: '2026-08-12'
+method: searched
+source: https://www.blackcrow.ai/
+plan_count: 0
+currency: null
+plans: []
+note: >-
+  Black Crow AI publishes no pricing. There is no pricing page — https://www.blackcrow.ai/pricing
+  returns 404 and no pricing URL appears in the sitemap (22 URLs, HTTP 200). Every commercial
+  path on the site funnels to a demo request at https://www.blackcrow.ai/demo, and the help
+  center (117 articles) contains no rate card, tier list, quota or overage. Onboarding is
+  Customer-Success-mediated: multiple help articles instruct the customer to ask their CSM to
+  enable a feature. This is an enterprise contact-sales model, recorded as an honest zero.
+evidence:
+- {url: 'https://www.blackcrow.ai/pricing', status: 404}
+- {url: 'https://www.blackcrow.ai/sitemap.xml', status: 200}
+- {url: 'https://www.blackcrow.ai/demo', status: 200}
+- {url: 'https://apps.shopify.com/blackcrow', status: 200}
+checked: '2026-08-12'

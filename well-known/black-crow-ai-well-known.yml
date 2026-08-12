@@ -1,6 +1,6 @@
-generated: '2026-07-18'
+generated: '2026-08-12'
 method: searched
-source: live probes of /.well-known/ on Black Crow AI hosts
+source: live probes of /.well-known/ on every Black Crow AI host, 2026-07-18 and re-run 2026-08-12
 hosts:
 - host: https://app.blackcrow.ai
   documents:
@@ -8,6 +8,10 @@ hosts:
     status: 200
     file: black-crow-ai-security.txt
   - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
     status: 404
 - host: https://www.blackcrow.ai
   documents:
@@ -21,3 +25,57 @@ hosts:
     status: 404
   - path: /.well-known/ai-plugin.json
     status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.blackcrow.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://storefronts.blackcrow.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://init.blackcrow.ai
+  soft_200_catch_all: true
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    note: NOT A DOCUMENT — see soft_200_note
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    note: NOT A DOCUMENT — see soft_200_note
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    note: NOT A DOCUMENT — see soft_200_note
+  soft_200_note: >-
+    init.blackcrow.ai answers HTTP 200 with a ZERO-BYTE text/javascript body for every path,
+    including paths that certainly do not exist. These 200s are a CDN catch-all, not served
+    documents, and are recorded as misses. No pointer is derived from this host.
+summary:
+  real_documents: 1
+  detail: >-
+    One genuine well-known document exists across the whole estate: the RFC 9116 security.txt
+    at https://app.blackcrow.ai/.well-known/security.txt, saved verbatim as
+    black-crow-ai-security.txt. Its Canonical field names only the app host, so
+    www.blackcrow.ai — the primary domain — is not covered by its own security.txt.

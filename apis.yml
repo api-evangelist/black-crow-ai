@@ -29,7 +29,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-12'
 tags:
 - Company
 - Ecommerce
@@ -39,7 +39,72 @@ tags:
 - Advertising
 - Personalization
 - Conversion Optimization
-apis: []
+- Analytics
+- Event Ingest
+- Tag Management
+- Shopify
+apis:
+- name: Black Crow AI Events API
+  description: >-
+    Live, versioned HTTP event-ingest API behind the Black Crow AI JavaScript tag. POST
+    /v1/events/{event_name} accepts a JSON body identified by siteName, pageId and visitorId
+    and carries the visit, purchase, cart, identity, score-update and Predictive Offer event
+    families; POST /v1/events/platform carries partner-platform events. Unauthenticated and
+    fully CORS-open, because it is called from the browser. A matching sandbox host runs at
+    api.sandbox.blackcrow.ai. Black Crow AI publishes no OpenAPI and no developer reference
+    for this surface — everything recorded here was probed live or read from the provider's
+    own shipped bundle.
+  humanURL: https://blackcrow.zendesk.com/hc/en-us/articles/20203743583387-JavaScript
+  baseURL: https://api.blackcrow.ai/v1
+  tags:
+  - Analytics
+  - Event Ingest
+  - Ecommerce
+  - Personalization
+  - Conversion Optimization
+  properties:
+  - type: Documentation
+    url: https://blackcrow.zendesk.com/hc/en-us/articles/20203743583387-JavaScript
+  - type: Authentication
+    url: authentication/black-crow-ai-authentication.yml
+  - type: Conventions
+    url: conventions/black-crow-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/black-crow-ai-error-codes.yml
+  - type: Sandbox
+    url: sandbox/black-crow-ai-sandbox.yml
+  - type: RateLimits
+    url: rate-limits/black-crow-ai-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/black-crow-ai-lifecycle.yml
+  - type: Conformance
+    url: conformance/black-crow-ai-conformance.yml
+- name: Black Crow AI Global API
+  description: >-
+    Client-side JavaScript API exposed by the Black Crow AI tag as window.blackcrow. Brands
+    push a binding ({app_name 'audience', bind 'scores_update', callback}) to receive Black
+    Crow's real-time visitor prediction scores in a callback and forward them to any target
+    platform with no turnkey integration, and push a {trigger 'extend', data} object to feed
+    Black Crow additional page data after page load. Additional triggers cover set, start,
+    session, refresh, partner_event and storefront_analytics, and the same events travel over
+    postMessage for embedded surfaces. The provider's documentation page for this API now
+    returns 404, but the mechanism is still present in the bundle served today.
+  humanURL: https://blackcrow.zendesk.com/hc/en-us/articles/20203743583387-JavaScript
+  baseURL: https://init.blackcrow.ai/js/core/
+  tags:
+  - Personalization
+  - Analytics
+  - Tag Management
+  - Conversion Optimization
+  properties:
+  - type: Documentation
+    url: https://blackcrow.zendesk.com/hc/en-us/articles/20203743583387-JavaScript
+  - type: Conventions
+    url: conventions/black-crow-ai-conventions.yml
+  - type: Components
+    url: components/black-crow-ai-components.yml
+  - type: Packages
+    url: packages/black-crow-ai-packages.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -58,6 +123,34 @@ common:
   url: well-known/black-crow-ai-well-known.yml
 - type: LLMsTxt
   url: llms/black-crow-ai-llms.txt
+- type: Packages
+  url: packages/black-crow-ai-packages.yml
+- type: SDKs
+  url: packages/black-crow-ai-packages.yml
+- type: Authentication
+  url: authentication/black-crow-ai-authentication.yml
+- type: Conventions
+  url: conventions/black-crow-ai-conventions.yml
+- type: ErrorCatalog
+  url: errors/black-crow-ai-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/black-crow-ai-lifecycle.yml
+- type: Conformance
+  url: conformance/black-crow-ai-conformance.yml
+- type: Sandbox
+  url: sandbox/black-crow-ai-sandbox.yml
+- type: Components
+  url: components/black-crow-ai-components.yml
+- type: RateLimits
+  url: rate-limits/black-crow-ai-rate-limits.yml
+- type: Plans
+  url: plans/black-crow-ai-plans-pricing.yml
+- type: Documentation
+  url: https://blackcrow.zendesk.com/hc/en-us
+- type: GettingStarted
+  url: https://blackcrow.zendesk.com/hc/en-us/articles/46541281990043-Getting-Started-with-Black-Crow-Storefronts-Onboarding
+- type: Blog
+  url: https://www.blackcrow.ai/resources
 - type: Support
   url: https://blackcrow.zendesk.com/hc/en-us
 - type: SignUp
@@ -73,7 +166,12 @@ common:
 - type: Website
   url: https://www.blackcrow.ai/
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 10
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Contract discovery found a live, undocumented, versioned API. api.blackcrow.ai/v1/events
+    and a matching api.sandbox.blackcrow.ai were read off the provider's own shipped tag and
+    then probed directly; no OpenAPI is published anywhere. The Global API documentation page
+    the previous round cited now returns 404 while the mechanism still ships.

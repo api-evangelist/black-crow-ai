@@ -1,4 +1,4 @@
-generated: '2026-07-18'
+generated: '2026-08-12'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -8,8 +8,25 @@ hosts:
   cert_expires: Oct 11 19:25:10 2026 GMT
   hsts: true
   hsts_max_age: 31536000
+- host: blackcrow.zendesk.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 18 08:24:32 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: api.blackcrow.ai
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Feb 24 23:59:59 2027 GMT
+  hsts: false
 domains:
 - domain: blackcrow.ai
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: zendesk.com
   dnssec: false
   caa: []
   spf: true

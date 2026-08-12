@@ -1,0 +1,37 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Response headers observed on https://api.blackcrow.ai/v1/events/view (POST and OPTIONS) on
+  2026-08-12, plus a search of the Black Crow AI help center (117 articles, retrieved via
+  https://blackcrow.zendesk.com/api/v2/help_center/en-us/articles.json, HTTP 200).
+limit_count: 0
+limits: []
+headers:
+  ratelimit: []
+  retry_after: false
+  observed_response_headers:
+  - date
+  - content-type
+  - access-control-allow-origin
+  - access-control-allow-methods
+  - access-control-allow-headers
+  - x-frame-options
+  - strict-transport-security
+  - cache-control
+  - expires
+  - pragma
+  - server-timing
+  exhaustion_status_code: null
+note: >-
+  No rate limits are published and none are signalled at runtime. No RateLimit-*,
+  X-RateLimit-* or Retry-After header appeared on any probed response, and no 429 was
+  observed. The one volume control that exists is CLIENT-SIDE SAMPLING, not a limit:
+  the browser tag reads config.pageViewSamplingPercent (default 100) and probabilistically
+  drops view events before they are sent. That value is set by Black Crow per site and is
+  never communicated to the caller, so an integrator has no runtime signal to back off on.
+  Recorded as an honest zero.
+evidence:
+- {url: 'https://api.blackcrow.ai/v1/events/view', method: POST, status: 400}
+- {url: 'https://api.blackcrow.ai/v1/events/view', method: OPTIONS, status: 200}
+- {url: 'https://init.blackcrow.ai/js/core/example.js', status: 200}
+checked: '2026-08-12'

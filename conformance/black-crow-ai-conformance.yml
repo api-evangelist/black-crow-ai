@@ -1,0 +1,86 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live probes of api.blackcrow.ai, api.sandbox.blackcrow.ai, app.blackcrow.ai and
+  www.blackcrow.ai on 2026-08-12, plus https://www.blackcrow.ai/legal/security-policy (HTTP 200).
+note: >-
+  Black Crow AI publishes no OpenAPI, so nothing here is derived from a spec. Every entry is
+  either an observed behaviour of the live API or a recorded absence. A `conforms: false` is a
+  measurement, not a criticism of a surface that never claimed the standard.
+standards:
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 surface. /.well-known/oauth-authorization-server and
+    /.well-known/oauth-protected-resource returned 404 on api.blackcrow.ai and
+    www.blackcrow.ai; the ingest endpoint's CORS preflight allows only Content-Type, so no
+    Authorization header can be sent.
+- id: oidc
+  conforms: false
+  evidence: '/.well-known/openid-configuration returned 404 on app.blackcrow.ai, www.blackcrow.ai and api.blackcrow.ai.'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use a custom envelope {event_id, version, request_timestamp, errors[]} served as
+    text/plain, not application/problem+json. See errors/black-crow-ai-error-codes.yml.
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: >-
+    https://app.blackcrow.ai/.well-known/security.txt returns 200 with Contact, Expires,
+    Preferred-Languages, Canonical and Policy fields. Saved verbatim at
+    well-known/black-crow-ai-security.txt.
+  gap: >-
+    Served only from app.blackcrow.ai. www.blackcrow.ai and api.blackcrow.ai return 404, and
+    the Canonical field points at the app host only, so the primary domain is uncovered.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation headers observed on any probed response.
+- id: rfc6797-hsts
+  conforms: true
+  evidence: >-
+    'strict-transport-security: max-age=63072000; includeSubDomains; preload' on
+    api.blackcrow.ai /v1/events responses; www.blackcrow.ai carries max-age=31536000.
+  gap: >-
+    The api.blackcrow.ai ROOT (GET /) is answered by the load balancer with an empty 200 and
+    NO Strict-Transport-Security header — the header is added by the application, not the
+    edge, so security/black-crow-ai-domain-security.yml correctly records hsts:false for that
+    host from a root probe. Both observations are true of different paths.
+- id: cors
+  conforms: true
+  evidence: >-
+    Access-Control-Allow-Origin '*', Access-Control-Allow-Methods 'GET, POST, PUT',
+    Access-Control-Allow-Headers 'Content-Type'; OPTIONS preflight answered 200 with correct
+    Vary headers (Origin, Access-Control-Request-Method, Access-Control-Request-Headers).
+- id: openapi
+  conforms: false
+  evidence: >-
+    No spec at any probed location on any host — /openapi.json, /openapi.yaml, /swagger.json,
+    /v1/openapi.json, /api-docs, /docs, /redoc, /v2/api-docs, /swagger-ui/index.html all 404
+    on api.blackcrow.ai; /openapi.json 404 on www.blackcrow.ai and app.blackcrow.ai.
+- id: asyncapi
+  conforms: false
+  evidence: No AsyncAPI document and no documented webhook surface.
+- id: graphql
+  conforms: false
+  evidence: 'https://api.blackcrow.ai/graphql returned 404 ("No static resource graphql.").'
+- id: mcp
+  conforms: false
+  evidence: 'https://api.blackcrow.ai/mcp returned 404; mcp.blackcrow.ai does not resolve.'
+- id: a2a-agent-card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json returned 404 on www.blackcrow.ai,
+    app.blackcrow.ai, api.blackcrow.ai and storefronts.blackcrow.ai. init.blackcrow.ai answers
+    200 with a zero-byte text/javascript body for EVERY path, including nonexistent ones —
+    a soft-200 catch-all, not a served document, and treated as a miss.
+- id: llms-txt
+  conforms: true
+  evidence: 'https://www.blackcrow.ai/llms.txt returns 200 with a real llms.txt-style document (5,124 bytes). Saved at llms/black-crow-ai-llms.txt.'
+compliance_program:
+  published: false
+  certifications: []
+  evidence: >-
+    https://www.blackcrow.ai/legal/security-policy (HTTP 200) publishes a responsible-disclosure
+    policy and a security contact but names NO certification — no SOC 2, ISO 27001, PCI DSS,
+    HIPAA, FedRAMP or CSA STAR claim appears anywhere on the site. trust.blackcrow.ai and
+    security.blackcrow.ai do not resolve. No Compliance or TrustCenter pointer is emitted.

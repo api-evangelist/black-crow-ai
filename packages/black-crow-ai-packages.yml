@@ -1,0 +1,73 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  GitHub org github.com/october8ai (verified as Black Crow AI: org name "Black Crow AI",
+  blog https://www.blackcrow.ai/, email tech@blackcrow.ai), plus registry probes of npm,
+  PyPI, RubyGems, crates.io and the Black Crow AI help center JavaScript install article.
+note: >-
+  Black Crow AI publishes no client library to any public package registry. Its distribution
+  is CDN script tag, a Google Tag Manager community template, a Shopify app, and a
+  source-distributed Cloudflare Workers edge SDK on GitHub. Registry probes for
+  npm @bcai/edge-sdk, npm "blackcrow", PyPI blackcrow / black-crow-ai / bcai all returned 404.
+packages:
+- language: typescript
+  registry: github
+  name: '@bcai/edge-sdk'
+  url: https://github.com/october8ai/bcai-edge/tree/main/packages/edge-sdk
+  install: npm link @bcai/edge-sdk   # built from source; not published to npm
+  official: true
+  version: 0.1.0
+  published: null
+  note: >-
+    First-party Cloudflare Workers edge SDK (sets the _bcai_z first-party visitor cookie at
+    the edge). Version 0.1.0 read from packages/edge-sdk/package.json in the october8ai/bcai-edge
+    repo. NOT published to npm — https://registry.npmjs.org/@bcai%2Fedge-sdk returned 404 on
+    2026-08-12 — so there is no registry publish date. Repo last pushed 2024-04-10; MIT licensed.
+- language: javascript
+  registry: cdn
+  name: Black Crow AI JavaScript tag
+  url: https://init.blackcrow.ai/js/core/<your-domain>.js
+  install: >-
+    <script>var script=document.createElement('script');
+    script.src='https://init.blackcrow.ai/js/core/example.js';script.async=true;
+    document.getElementsByTagName('head')[0].appendChild(script);</script>
+  official: true
+  version: null
+  published: null
+  note: >-
+    Per-customer CDN bundle, named after the customer domain (xyz.com -> xyz.js). The URL is
+    UNPINNED — there is no version segment, so a consumer cannot tell which build they are
+    loading and cannot pin one. The served bundle self-reports an internal BUILD_NUMBER
+    (17641 observed on 2026-08-12 in https://init.blackcrow.ai/js/core/example.js, HTTP 200,
+    311,866 bytes decompressed) but that number is not exposed as a selectable version.
+- language: n/a
+  registry: gtm-template-gallery
+  name: Black Crow AI (Google Tag Manager community template)
+  url: https://github.com/october8ai/GTMTag
+  install: GTM > Add a New Tag > Community Template Gallery > search "Black Crow AI"
+  official: true
+  version: null
+  published: null
+  note: >-
+    Google Tag Manager custom template (template.tpl + metadata.yaml), Apache-2.0, distributed
+    through the GTM Community Template Gallery rather than a package registry, so there is no
+    version metadata endpoint to query. Repo last pushed 2023-01-03.
+- language: n/a
+  registry: shopify-app-store
+  name: Black Crow AI Shopify app
+  url: https://apps.shopify.com/blackcrow
+  install: Install from the Shopify App Store
+  official: true
+  version: null
+  published: null
+  note: >-
+    Shopify App Store listing (HTTP 200 on 2026-08-12). The App Store publishes no version
+    number or release date on the public listing, so both fields are recorded null rather
+    than guessed.
+registries_probed:
+- {registry: npm, query: '@bcai/edge-sdk', status: 404}
+- {registry: npm, query: 'blackcrow (text search)', status: 200, result: no first-party package}
+- {registry: npm, query: 'black-crow-ai (text search)', status: 200, result: no first-party package}
+- {registry: pypi, query: blackcrow, status: 404}
+- {registry: pypi, query: black-crow-ai, status: 404}
+- {registry: pypi, query: bcai, status: 404}

@@ -1,0 +1,86 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  Black Crow AI help center (https://blackcrow.zendesk.com/api/v2/help_center/en-us/articles.json,
+  HTTP 200, 117 articles), the shipped first-party bundle
+  https://init.blackcrow.ai/js/core/example.js (HTTP 200), the Shopify App Store listing
+  https://apps.shopify.com/blackcrow (HTTP 200), and github.com/october8ai.
+note: >-
+  Black Crow AI's entire integration surface is client-side. It ships no server SDK; what it
+  ships is a tag, a tag-manager template, a Shopify app extension, an edge worker SDK and a
+  set of hosted, embeddable end-user surfaces. Grouped here by family. Distinct from
+  packages/black-crow-ai-packages.yml, which records the distribution artifacts themselves.
+families:
+- family: Tag / loader
+  components:
+  - name: Black Crow AI JavaScript tag
+    kind: script-tag
+    loader: https://init.blackcrow.ai/js/core/{your-domain}.js
+    install: >-
+      Copy the loader snippet into the <head> of every page; replace example.js with your
+      domain (https://xyz.com -> xyz.js).
+    docs: https://blackcrow.zendesk.com/hc/en-us/articles/20203743583387-JavaScript
+    note: >-
+      Per-customer bundle. Async-appended to <head>; preconnects and dns-prefetches
+      https://api.blackcrow.ai/ on load.
+  - name: Black Crow AI Google Tag Manager template
+    kind: gtm-community-template
+    install: 'GTM > Add a New Tag > Community Template Gallery > "Black Crow AI"; set Site Name; trigger All Pages (plus History Change for SPAs).'
+    source: https://github.com/october8ai/GTMTag
+    docs: https://blackcrow.zendesk.com/hc/en-us/articles/20203742349723-Google-Tag-Manager
+  - name: Black Crow Shopify app extension
+    kind: shopify-app-embed
+    install: https://apps.shopify.com/blackcrow
+    docs: https://blackcrow.zendesk.com/hc/en-us/articles/20768117072027-Step-1-Install-the-Black-Crow-Shopify-App
+    note: >-
+      App-embed toggle must be ON in the Shopify theme editor for the tag to load. The bundle
+      identifies this path as TAG_SRC "ShopifyAppExtension" and skips its own preconnect hints.
+  - name: '@bcai/edge-sdk'
+    kind: edge-worker-sdk
+    runtime: Cloudflare Workers
+    source: https://github.com/october8ai/bcai-edge
+    note: >-
+      Sets the first-party _bcai_z visitor cookie at the CDN edge instead of in the browser,
+      rewriting the cookie domain to the apex. Ships with an example proxy worker.
+- family: Client-side API
+  components:
+  - name: Global API (window.blackcrow)
+    kind: js-command-queue
+    surface: 'window.blackcrow.push({app_name, bind, callback}) and window.blackcrow.push({trigger, data})'
+    docs: https://www.blackcrow.ai/integrations/global-api
+    docs_status: 404
+    note: >-
+      The documentation page is gone (404 as of 2026-08-12; it was live 2025-11-08), but the
+      mechanism is still present in the bundle served today. Contract captured in
+      conventions/black-crow-ai-conventions.yml.
+- family: Hosted end-user surfaces
+  components:
+  - name: Storefronts
+    kind: hosted-page
+    host: https://storefronts.blackcrow.ai/
+    status: 200
+    note: >-
+      AI-generated post-click shopping experiences, served on the storefronts.blackcrow.ai
+      host and linked from ads, email and SMS. Product paths of the form
+      https://storefronts.blackcrow.ai/products/... and a shared email/SMS post-click surface
+      at /emailandsms-postclick.
+    docs: https://blackcrow.zendesk.com/hc/en-us/articles/46544188973083-Platform-Tour-Navigating-the-Black-Crow-Storefronts-Platform
+  - name: Predictive Offer forms and popups
+    kind: embedded-overlay
+    note: >-
+      Score-gated on-site offer forms and popups rendered by the tag (pwo_* event family:
+      impression, open attempt, email lead, SMS lead, close, decision). Creative, default
+      forms and scheduled forms are managed in the Black Crow Portal, not in code.
+    docs: https://blackcrow.zendesk.com/hc/en-us/articles/29092986251035-Predictive-Offer-Settings-in-the-Black-Crow-Portal
+  - name: Multi-destination links
+    kind: hosted-link
+    note: Link surface used to split paid traffic across storefront variants and an existing destination for split testing.
+    docs: https://blackcrow.zendesk.com/hc/en-us/articles/46594373904027-Getting-Started-with-Multi-Destination-Links
+- family: Console
+  components:
+  - name: Black Crow Portal
+    kind: hosted-dashboard
+    host: https://app.blackcrow.ai/
+    note: >-
+      Product settings, Enhanced CAPI / Smart ID CAPI toggles, Predictive Offer configuration,
+      analytics and reporting. Sign-in at https://app.blackcrow.ai/sign-in.

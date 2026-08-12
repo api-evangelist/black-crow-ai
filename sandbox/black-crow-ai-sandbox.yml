@@ -1,0 +1,52 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Host discovered in Black Crow AI's own first-party browser bundle
+  https://init.blackcrow.ai/js/core/example.js (HTTP 200, 2026-08-12) and confirmed live by
+  direct probe of https://api.sandbox.blackcrow.ai/.
+note: >-
+  Black Crow AI publishes NO sandbox documentation — there is no testing guide, no test
+  credentials page, and no test values in the help center. The separation recorded here was
+  observed, not documented: the shipped tag selects a sandbox base URL instead of the
+  production one when its internal sandbox predicate is true, and that sandbox host answers
+  live with the same contract. Nothing below is invented; no test identifiers are published
+  by the provider, so none are listed.
+environments:
+- name: production
+  base_url: https://api.blackcrow.ai/v1
+  event_ingest: https://api.blackcrow.ai/v1/events/{event_name}
+  platform_ingest: https://api.blackcrow.ai/v1/events/platform
+  status: 200
+- name: sandbox
+  base_url: https://api.sandbox.blackcrow.ai/v1
+  event_ingest: https://api.sandbox.blackcrow.ai/v1/events/{event_name}
+  platform_ingest: https://api.sandbox.blackcrow.ai/v1/events/platform
+  status: 200
+  evidence:
+  - {url: 'https://api.sandbox.blackcrow.ai/', http_status: 200, fetched: '2026-08-12'}
+  - {url: 'https://api.sandbox.blackcrow.ai/v1/events/nonexistent-probe', method: POST, http_status: 400, note: 'returned the same validation envelope as production — Validation Error 102 "siteName must not be null"', fetched: '2026-08-12'}
+separation:
+  mechanism: host
+  description: >-
+    Test vs live is selected by HOST, not by a key prefix or a mode flag in the payload —
+    the same path and the same request body are sent to api.sandbox.blackcrow.ai instead of
+    api.blackcrow.ai. Because ingest is unauthenticated (see
+    authentication/black-crow-ai-authentication.yml) there are no test-mode credentials to
+    prefix.
+  key_prefixes: []
+  test_values: []
+  test_clock: null
+  fixtures: null
+customer_facing_test_tooling:
+  documented: false
+  detail: >-
+    The only customer-facing verification surfaces Black Crow documents are (a) the setup
+    verification page https://www.blackcrow.ai/setup/verify and (b) "dummy events" that the
+    Black Crow team configures internally before activating Enhanced CAPI for Meta
+    (help center article 20587171247259, "What is Enhanced CAPI for Meta?"). Neither is a
+    self-serve sandbox, and neither publishes test values.
+gaps:
+- >-
+  The sandbox host is undocumented. A customer or integrator cannot discover it from the
+  docs — it is only visible by reading the shipped bundle. Publishing the sandbox base URL
+  and a set of magic test identifiers would make the pre-production path usable.

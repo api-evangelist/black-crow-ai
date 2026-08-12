@@ -1,0 +1,82 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live probes of blackcrow.ai, api.blackcrow.ai, app.blackcrow.ai and status.blackcrow.ai on
+  2026-08-12, plus https://www.blackcrow.ai/sitemap.xml (HTTP 200) and the Black Crow AI
+  help center (https://blackcrow.zendesk.com/api/v2/help_center/en-us/articles.json, HTTP 200,
+  117 articles).
+versioning:
+  scheme: uri-path
+  current: v1
+  policy_url: null
+  detail: >-
+    /v1/ path prefix, echoed as "version": "v1" in every response body. No published
+    versioning policy, no deprecation window, no version negotiation.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    No RFC 8594 Sunset or Deprecation headers were observed on any probed response, and no
+    deprecation policy page exists.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  probed:
+  - {url: 'https://status.blackcrow.ai/', result: 'DNS did not resolve (curl exit 6/28, no HTTP response)', fetched: '2026-08-12'}
+  detail: Black Crow AI publishes no status page.
+changelog:
+  url: null
+  probed:
+  - {url: 'https://www.blackcrow.ai/changelog', http_status: 404, fetched: '2026-08-12'}
+  detail: >-
+    No dated changelog. The help center is versionless — Zendesk exposes per-article
+    updated_at timestamps but there is no release feed a consumer can follow.
+observed_lifecycle_events:
+- date: '2026-08-12'
+  event: documentation-removed
+  what: >-
+    The provider's own "Global API" integration page — the only public developer
+    documentation Black Crow AI had, describing the window.blackcrow score callback and the
+    data-layer extend trigger — now returns HTTP 404 at
+    https://www.blackcrow.ai/integrations/global-api. So does the integrations index
+    https://www.blackcrow.ai/integrates-with, every per-integration page under
+    /integrations/*, and /pricing. The page was live and public as recently as 2025-11-08.
+  evidence:
+  - {url: 'https://www.blackcrow.ai/integrations/global-api', http_status: 404, fetched: '2026-08-12'}
+  - {url: 'https://www.blackcrow.ai/integrates-with', http_status: 404, fetched: '2026-08-12'}
+  - {url: 'https://www.blackcrow.ai/pricing', http_status: 404, fetched: '2026-08-12'}
+  impact: >-
+    The capability was NOT retired — the score-binding mechanism and every trigger constant
+    are still present in the bundle served from init.blackcrow.ai today, and the /v1/events
+    endpoints are still live. This is a documentation regression caused by the marketing-site
+    rebuild around the Storefronts product: the sitemap now lists 22 URLs, none of them
+    developer-facing.
+- date: '2026-08-12'
+  event: product-repositioning
+  what: >-
+    The company's public positioning has moved from predictive visitor scoring / Smart ID /
+    Predictive Offer toward AI-generated post-click Storefronts. Both generations coexist in
+    the help center (117 articles) and in the shipped tag, but only Storefronts is represented
+    on the marketing site and in the sitemap.
+  evidence:
+  - {url: 'https://www.blackcrow.ai/sitemap.xml', http_status: 200, fetched: '2026-08-12'}
+deprecated_operations: []
+docs_access:
+  surface: https://blackcrow.zendesk.com/hc/en-us
+  html_status: 403
+  api_status: 200
+  detail: >-
+    The Zendesk help center HTML answers 403 to non-browser clients (a bot challenge, not a
+    login wall) — the same 403 is returned for the help center root and for individual
+    articles. The public Help Center API at
+    https://blackcrow.zendesk.com/api/v2/help_center/en-us/articles.json serves all 117
+    articles anonymously with HTTP 200, so the documentation is genuinely public and machine
+    readable; only the rendered HTML path is challenged.
+gaps:
+- No status page, no SLA, no changelog, no deprecation policy, no version policy.
+- >-
+  The single highest-value fix here is restoring a developer page for the Global API and the
+  /v1/events contract; the surface is live and undocumented.

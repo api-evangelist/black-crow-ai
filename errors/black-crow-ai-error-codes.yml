@@ -1,0 +1,95 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live unauthenticated probes of https://api.blackcrow.ai/v1/events/* and
+  https://api.sandbox.blackcrow.ai/v1/events/* on 2026-08-12. Black Crow AI publishes no
+  OpenAPI and no error reference page, so this catalog records the envelope and codes the
+  API actually returned.
+format: custom
+rfc9457: false
+note: >-
+  Not RFC 9457. Responses are returned with Content-Type text/plain carrying a JSON body,
+  and the error list is an array under `errors` rather than a problem+json object.
+envelope:
+  shape: |
+    {
+      "event_id": null,
+      "version": "v1",
+      "request_timestamp": "1786555444652",
+      "errors": [
+        {"error_type": "Validation Error", "error_message": "siteName must not be null", "error_code": "102"}
+      ]
+    }
+  fields:
+  - name: event_id
+    type: string|null
+    note: server-assigned event identifier; null on rejected requests
+  - name: version
+    type: string
+    note: API version echoed on every response; observed value "v1"
+  - name: request_timestamp
+    type: string
+    note: epoch milliseconds as a string
+  - name: errors
+    type: array
+    note: one object per failed check — validation errors fan out, one entry per field
+  - name: 'errors[].error_type'
+    type: string
+  - name: 'errors[].error_message'
+    type: string
+  - name: 'errors[].error_code'
+    type: string
+problems:
+- error_code: '102'
+  error_type: Validation Error
+  http_status: 400
+  title: Required event field missing
+  observed_messages:
+  - siteName must not be null
+  - pageId must not be null
+  - visitorId must not be null
+  remediation: >-
+    Supply siteName, pageId and visitorId in the JSON body. The browser tag populates these
+    automatically; they are only missing on hand-built requests.
+  evidence:
+    url: https://api.blackcrow.ai/v1/events/view
+    method: POST
+    body: '{}'
+    http_status: 400
+    fetched: '2026-08-12'
+- error_code: '404'
+  error_type: Not Found
+  http_status: 404
+  title: No such resource
+  observed_messages:
+  - No static resource v1/events.
+  - No static resource openapi.json.
+  remediation: >-
+    Event ingest is POST to /v1/events/{event_name}. The collection path /v1/events/ and any
+    documentation path (/openapi.json, /swagger.json, /api-docs, /docs, /redoc) are not served.
+  evidence:
+    url: https://api.blackcrow.ai/v1/events/
+    method: GET
+    http_status: 404
+    fetched: '2026-08-12'
+- error_code: '405'
+  error_type: Method Not Allowed
+  http_status: 405
+  title: HTTP method not supported
+  observed_messages:
+  - "Request method 'DELETE' is not supported"
+  remediation: >-
+    Use POST. The OPTIONS preflight advertises Access-Control-Allow-Methods GET, POST, PUT;
+    the origin Allow header lists GET, HEAD, POST, PUT, DELETE, OPTIONS, TRACE, PATCH but
+    DELETE is rejected at the application layer.
+  evidence:
+    url: https://api.blackcrow.ai/v1/events/view
+    method: DELETE
+    http_status: 405
+    fetched: '2026-08-12'
+gaps:
+- >-
+  No published error reference. Only the codes above were observed; the code space
+  (102 suggests a numbered validation family) is certainly larger than three entries.
+  Authenticated / valid-payload responses were not exercised — this pipeline does not
+  send synthetic events into a production analytics pipeline.

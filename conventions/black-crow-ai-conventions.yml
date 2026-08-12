@@ -1,0 +1,147 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live probes of https://api.blackcrow.ai/v1/events/* (2026-08-12), the first-party browser
+  bundle https://init.blackcrow.ai/js/core/example.js (HTTP 200, 311,866 bytes decompressed),
+  the Black Crow AI help center article "JavaScript"
+  (https://blackcrow.zendesk.com/hc/en-us/articles/20203743583387-JavaScript), and the
+  provider's own "Global API" integration page as captured on 2025-11-08
+  (live URL https://www.blackcrow.ai/integrations/global-api now returns 404).
+note: >-
+  Black Crow AI ships no OpenAPI and no developer reference. Everything below was read off the
+  running surface or off provider-authored pages. Where a convention is absent, that absence
+  is recorded rather than filled in.
+authentication:
+  style: none (unauthenticated, site-identified ingest) + delegated platform credentials
+  detail: see authentication/black-crow-ai-authentication.yml
+transport:
+  protocol: HTTPS only
+  http_version: HTTP/2
+  content_type_request: application/json
+  content_type_response: text/plain (JSON body served under a text/plain content type)
+  cors:
+    allow_origin: '*'
+    allow_methods: GET, POST, PUT
+    allow_headers: Content-Type
+    note: >-
+      Fully open CORS with no credential header allowed through preflight — consistent with a
+      browser-tag ingest endpoint rather than a server-to-server API.
+  caching: 'Cache-Control: no-store, no-cache; Pragma: no-cache; Expires: 0'
+  security_headers:
+    strict_transport_security: max-age=63072000; includeSubDomains; preload
+    x_frame_options: SAMEORIGIN
+  server_timing: 'total;dur=<ms> returned on every response (observed total;dur=24)'
+versioning:
+  scheme: uri-path
+  current: v1
+  echoed_in_body: true
+  detail: >-
+    Every path is prefixed /v1/ and every response body echoes "version": "v1". No date-based
+    version header, no version negotiation, no published version policy.
+  docs: null
+request_shape:
+  event_ingest:
+    method: POST
+    path: /v1/events/{event_name}
+    body: JSON object
+    required_fields: [siteName, pageId, visitorId]
+    note: >-
+      Required fields confirmed by an empty-body POST, which returned three Validation Error
+      102 entries naming exactly those fields. event_name is both a path segment and a body
+      field (the tag sets body.event_name to match the path).
+  platform_ingest:
+    method: POST
+    path: /v1/events/platform
+    note: 'body carries event_name "platform", site_name, platform_event_names[], platform_event_id and a free-form data object'
+event_names_observed:
+- view
+- view_response
+- purchase
+- delayed_purchase
+- add_to_cart
+- initiate_checkout
+- identify
+- scores_update
+- overrides
+- clear_overrides
+- exit_intent
+- pwo_impression
+- pwo_email_lead
+- pwo_sms_lead
+- pwo_close
+- pwo_open_attempt
+- pwo_decision
+- pred_welcome_decision
+- bad_actor_timeout
+- bad_actor_beforeunload
+- platform
+- storefront_analytics
+client_side_api:
+  name: Global API
+  surface: window.blackcrow (aliased window.intent)
+  style: array-push command queue, bound by app_name + event name
+  documented_at: https://www.blackcrow.ai/integrations/global-api
+  documented_status: 404
+  documented_note: >-
+    The provider's Global API page was live and public as recently as 2025-11-08 but returns
+    404 today; the marketing site has been rebuilt around Storefronts and the integrations
+    section was removed. The BINDING MECHANISM IS STILL PRESENT AND FUNCTIONAL in the bundle
+    served from init.blackcrow.ai today — the same triggers and event constants appear in the
+    2026-08-12 build — so this is a documentation regression, not a removed capability.
+  bindings:
+  - app_name: audience
+    bind: scores_update
+    shape: 'window.blackcrow.push({app_name, bind, callback, timeout})'
+    purpose: >-
+      Receive the Black Crow visitor scores in a callback so they can be forwarded to any
+      target platform that has no turnkey integration.
+  triggers:
+  - {trigger: extend, purpose: 'merge additional page data into the Black Crow data layer after page load'}
+  - {trigger: set, purpose: 'replace the pushed data layer'}
+  - {trigger: start}
+  - {trigger: session}
+  - {trigger: refresh}
+  - {trigger: partner_event}
+  - {trigger: storefront_analytics, purpose: 'send a storefront analytics event; requires platform_event_name and platform_event_id, both non-empty strings'}
+  cross_frame: >-
+    Bindings also travel over window.postMessage with a namespaced envelope
+    {namespace, app_name, event_name, data}, so an embedded storefront/iframe can raise the
+    same events.
+idempotency:
+  supported: false
+  detail: >-
+    No idempotency key, no request-deduplication header, and no documented replay contract.
+    The BROWSER TAG performs client-side duplicate suppression (it refuses to re-send an
+    identical event and logs "Duplicate <event>"), and it replays queued platform events with
+    a replay:true flag, but neither is a server-side idempotency guarantee a caller can rely
+    on. No Idempotency pointer is emitted for this provider.
+pagination:
+  supported: false
+  detail: The published surface is write-only event ingest; there is no collection read to paginate.
+tracing:
+  request_id_header: null
+  response_correlation: >-
+    Responses carry event_id (server-assigned, null on rejected requests) and
+    request_timestamp (epoch milliseconds as a string). There is no X-Request-Id header.
+rate_limit_signaling:
+  headers: []
+  detail: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After headers were returned on any probed response.
+    The tag applies client-side SAMPLING instead (config.pageViewSamplingPercent, default 100)
+    — a volume control set by Black Crow per site, not a limit signalled to the caller.
+  see: rate-limits/black-crow-ai-rate-limits.yml
+error_envelope:
+  format: custom
+  see: errors/black-crow-ai-error-codes.yml
+cookies:
+  first_party_visitor_cookie: _bcai_z
+  detail: >-
+    Visitor identity is a first-party cookie. It can be set browser-side by the tag or at the
+    CDN edge by the first-party Cloudflare Workers SDK @bcai/edge-sdk
+    (github.com/october8ai/bcai-edge), which rewrites the cookie domain to the apex.
+cross_links:
+  authentication: authentication/black-crow-ai-authentication.yml
+  errors: errors/black-crow-ai-error-codes.yml
+  lifecycle: lifecycle/black-crow-ai-lifecycle.yml
+  rate_limits: rate-limits/black-crow-ai-rate-limits.yml
+  sandbox: sandbox/black-crow-ai-sandbox.yml
