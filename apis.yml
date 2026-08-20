@@ -32,6 +32,19 @@ created: '2026-07-17'
 modified: '2026-08-12'
 tags:
 - Company
+- E-Commerce
+- Artificial Intelligence
+- Machine-Learning
+- Marketing
+- Advertising
+- Personalization
+- Conversion Optimization
+- Analytics
+- Event Ingest
+- Tag Management
+- Shopify
+tags_raw:
+- Company
 - Ecommerce
 - Artificial Intelligence
 - Machine Learning
@@ -57,6 +70,12 @@ apis:
   humanURL: https://blackcrow.zendesk.com/hc/en-us/articles/20203743583387-JavaScript
   baseURL: https://api.blackcrow.ai/v1
   tags:
+  - Analytics
+  - Event Ingest
+  - E-Commerce
+  - Personalization
+  - Conversion Optimization
+  tags_raw:
   - Analytics
   - Event Ingest
   - Ecommerce
