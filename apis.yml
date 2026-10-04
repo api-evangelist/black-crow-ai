@@ -45,7 +45,7 @@ tags:
 - Company
 - E-Commerce
 - Artificial Intelligence
-- Machine-Learning
+- Machine Learning
 - Marketing
 - Advertising
 - Personalization
@@ -67,6 +67,7 @@ tags_raw:
 - Event Ingest
 - Tag Management
 - Shopify
+- Machine-Learning
 apis:
 - name: Black Crow AI Events API
   description: >-
