@@ -1,0 +1,20 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/black-crow-ai/integrations
+- https://zapier.com/apps/black-crow/integrations
+- https://n8n.io/integrations/black-crow-ai/
+- https://n8n.io/integrations/black-crow/
+- https://composio.dev/toolkits/black-crow-ai
+- https://monid.ai/tools/black-crow-ai
+checked:
+- https://composio.dev/toolkits/black-crow-ai
+- https://monid.ai/tools/black-crow-ai
+- https://n8n.io/integrations/black-crow-ai/
+- https://n8n.io/integrations/black-crow/
+- https://zapier.com/apps/black-crow-ai/integrations
+- https://zapier.com/apps/black-crow/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
