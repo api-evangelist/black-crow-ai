@@ -64,6 +64,107 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Black Crow AI is a company surfaced as a portfolio company of bloomberg-beta and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Black Crow AI is an ecommerce AI company that turns paid advertising traffic into predictable revenue using AI-generated post-click Storefronts. Storefronts are shopping experiences built specifically for paid ad traffic, kept aligned with ad creative and audience intent, generated in minutes through a no-code workflow, and optimized through structured split-test experimentation and continuous learning. Black Crow also exposes a script-based "Global API" callback that surfaces its real-time visitor prediction scores (delivered in under 20 milliseconds) so brands can ingest scores into any target platform. Surfaced as a portfolio company of Bloomberg Beta and enriched into the API Evangelist network.
 
-Backed by: bloomberg-beta — https://www.blackcrow.ai/
+**Areas:** Company · E-Commerce · Artificial Intelligence · Machine Learning · Marketing · Advertising · Personalization · Conversion Optimization · Analytics · Event Ingest · Tag Management · Shopify
+
+## Black Crow AI on APIs.io
+
+Everything profiled for Black Crow AI is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/black-crow-ai/](https://apis.io/providers/black-crow-ai/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Black Crow AI Events API](https://apis.io/apis/black-crow-ai/black-crow-ai-events-api/) — Live, versioned HTTP event-ingest API behind the Black Crow AI JavaScript tag. POST /v1/events/{event_name} accepts a JSON body identified by siteName,…
+- [Black Crow AI Global API](https://apis.io/apis/black-crow-ai/black-crow-ai-global-api/) — Client-side JavaScript API exposed by the Black Crow AI tag as window.blackcrow. Brands push a binding ({app_name 'audience', bind 'scores_update',…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Black Crow Ai Authentication](https://apis.io/security/black-crow-ai/black-crow-ai-authentication/)
+- [Black Crow Ai Domain Security](https://apis.io/security/black-crow-ai/black-crow-ai-domain-security/)
+- [Black Crow Ai Vulnerability Disclosure](https://apis.io/security/black-crow-ai/black-crow-ai-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Black Crow Ai Plans Pricing](https://apis.io/plans/black-crow-ai/black-crow-ai-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Black Crow Ai Rate Limits](https://apis.io/rate-limits/black-crow-ai/black-crow-ai-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.blackcrow.ai/)
+- [Documentation](https://blackcrow.zendesk.com/hc/en-us)
+- [Getting started](https://blackcrow.zendesk.com/hc/en-us/articles/46541281990043-Getting-Started-with-Black-Crow-Storefronts-Onboarding)
+- [Sign up](https://www.blackcrow.ai/demo)
+- [Support](https://blackcrow.zendesk.com/hc/en-us)
+- [Blog](https://www.blackcrow.ai/resources)
+- [Security](https://www.blackcrow.ai/legal/security-policy)
+- [Terms of service](https://www.blackcrow.ai/legal/terms-of-service)
+- [Privacy policy](https://www.blackcrow.ai/legal/privacy-policy)
+- [GitHub](https://github.com/october8ai)
+
+## API Evangelist rating
+
+**Kin Score 31.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 54.8 |
+| Access clarity | 34.2 |
+
+**Agent readiness 7.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 28.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/black-crow-ai/](https://apis.io/providers/black-crow-ai/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Black Crow AI: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/black-crow-ai/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
